@@ -1,75 +1,69 @@
-# Hospital Management Project README
+# Hospital Management Project Setup and Execution Guide
 
-This project is implemented using Spring Boot, REST API, and MySQL. The following steps explain how to execute the project based on the project assignment requirements.
+This guide will help you set up and execute the Hospital Management Project implemented using Spring Boot, REST API, and MySQL. The project uses Spring Tool Suite (STS) IDE, MySQL Workbench, and Postman API, but you can use similar tools of your choice.
 
-## Tools Used
-- Spring Tool Suite (STS) IDE
-- MySQL Workbench
-- POSTMAN API
+## Step 1: Tools and Prerequisites
 
-Note: It's not necessary to use these specific tools; you can choose similar alternatives to run the project.
+- **Tools Used:** Spring Tool Suite (STS) IDE, MySQL Workbench, Postman API (You can choose alternative tools if preferred).
 
-## Steps to Execute the Project
+## Step 2: Register a User
 
-1. Register a User using API Request:
+To begin, register a user using the following API request:
 
-   - Method: POST
-   - URL: http://localhost:8090/register
-   - Port No: 8090 (You can change this in the `application.properties` file if needed)
-   - Request Body: JSON format (You can change values but not key names)
+- **Method:** POST
+- **URL:** http://localhost:8090/register (You can change the port number in application.properties)
+- **Headers:** Content-Type: application/json
+- **Body:**
 
-   Example Request Body:
-   ```json
-   {
-       "username": "jatinx",
-       "password": "kediax",
-       "role": "ROLE_USER"
-   }
-   ```
+```json
+{
+    "username": "jatinx",
+    "password": "kediax",
+    "role": "ROLE_USER"
+}
+After registration, you will receive an authentication token. Save this token as it will be needed for further requests.
 
-2. Authenticate the User:
+Step 3: Authentication
+Authenticate the user by sending a POST request to the following endpoint:
 
-   - Method: POST
-   - URL: http://localhost:8090/authenticate
-   - Follow the same steps as in step 1 for the request.
+Method: POST
+URL: http://localhost:8090/authenticate
+Headers: Content-Type: application/json
+Body:
+json
+{
+    "username": "jatinx",
+    "password": "kediax"
+}
+Use the token received for authorization in subsequent requests.
 
-   Example Request Body:
-   ```json
-   {
-       "username": "jatinx",
-       "password": "kediax"
-   }
-   ```
+Step 4: Submit Patient Details
+To submit patient details, make a POST request to:
 
-3. Submit Patient Details:
+Method: POST
+URL: http://localhost:8090/api/patients/admit
+Headers: Content-Type: application/json, Authorization: Bearer {your_token}
+Body:
+json
+{
+    "name": "Ajay kedia",
+    "age": 24,
+    "room": "101",
+    "doctorName": "Dr. Smith",
+    "admitDate": "2023-09-23",
+    "expenses": 1500.00,
+    "status": "admitted"
+}
+Step 5: Fetch All Patient Details
+To retrieve all patient details, send a GET request to:
 
-   - Method: POST
-   - URL: http://localhost:8090/api/patients/admit
-   - Follow the same steps as in step 1 for the request.
+Method: GET
+URL: http://localhost:8090/api/patients/all
+Headers: Authorization: Bearer {your_token}
+Step 6: Discharge a Patient
+To discharge a patient from the hospital, use a PUT request with the patient's ID in the URL:
 
-   Example Request Body:
-   ```json
-   {
-       "name": "Ajay Kedia",
-       "age": 24,
-       "room": "101",
-       "doctorName": "Dr. Smith",
-       "admitDate": "2023-09-23",
-       "expenses": 1500.00,
-       "status": "admitted"
-   }
-   ```
-
-4. Fetch All Patient Details:
-
-   - Method: GET
-   - URL: http://localhost:8090/api/patients/all
-
-5. Discharge a Patient:
-
-   - Method: PUT
-   - URL: http://localhost:8090/api/patients/discharge/{Patient_id}
-
-```
-
-Please replace `{Patient_id}` in step 5 with the actual patient ID you want to discharge. This README provides clear instructions for executing the Hospital Management Project.
+Method: PUT
+URL: http://localhost:8090/api/patients/discharge/{Patient_id}
+Headers: Authorization: Bearer {your_token}
+Please follow these steps to set up and execute the Hospital Management Project. Make sure to replace {your_token} and {Patient_id} with actual values as needed.
